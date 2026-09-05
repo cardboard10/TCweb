@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyScript Anywhere</title>
+    
+    <!-- PyScript Stylesheet -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2026.7.3/core.css">
+    
+    <!-- PyScript Core Engine -->
+    <script type="module" src="https://pyscript.net/releases/2026.7.3/core.js"></script>
+</head>
+<body>
+
+    <h1>Python Everywhere in HTML</h1>
+
+    <!-- You can place a <script type="py"> tag at the top -->
+    <script type="py">
+        print("Running from the top of the body!")
+    </script>
+
+    <div style="margin: 20px 0; padding: 10px; background: #f4f4f4;">
+        <p>Some regular HTML content in the middle.</p>
+    </div>
+
+    <!-- Or place another one further down -->
+    <script type="py">
+        from pyscript import display
+        display("Running from the bottom of the body!")
+    </script>
+
+</body>
+</html>
