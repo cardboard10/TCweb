@@ -1,0 +1,12 @@
+# Visual Studio user files
+.vs
+x64
+Debug
+Release
+.user
+.suo
+
+# Compiled objects and binaries
+.obj
+.exe
+.pdb
