@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pynix Arcade: Pong</title>
+    
+    <!-- PyScript Core Engine -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2026.7.3/core.css">
+    <script type="module" src="https://pyscript.net/releases/2026.7.3/core.js"></script>
+</head>
+<body style="background: #111; color: white; text-align: center; font-family: monospace; margin-top: 30px;">
+
+    <h2>Pynix Retro Arcade - Pong</h2>
+    <p>Player 1: <b>W / S</b> keys | Player 2: <b>Up / Down</b> arrows</p>
+    
+    <!-- Container where Python will inject the canvas -->
+    <div id="game-container"></div>
+
+    <script type="py">
+        from js import document, window
+        from pyodide.ffi import create_proxy
+
+        # Dynamically create and style the game canvas via Python
+        canvas = document.createElement("canvas")
+        canvas.width = 600
+        canvas.height = 400
+        canvas.style.border = "2px solid #4ec9b0"
+        canvas.style.background = "#000"
+        document.getElementById("game-container").appendChild(canvas)
+        ctx = canvas.getContext("2d")
+
+        # Game state configuration
+        ball = {"x": 300, "y": 200, "dx": 3, "dy": 3, "radius": 8}
+        p1 = {"x": 20, "y": 150, "w": 10, "h": 80}
+        p2 = {"x": 570, "y": 150, "w": 10, "h": 80}
+        scores = [0, 0]
+
+        # Input tracking dictionary
+        keys = {}
+
+        def handle_keydown(event):
+            keys[event.key] = True
+
+        def handle_keyup(event):
+            keys[event.key] = False
+
+        # Bind global event listeners using proxy wrappers
+        document.addEventListener("keydown", create_proxy(handle_keydown))
+        document.addEventListener("keyup", create_proxy(handle_keyup))
+
+        def update():
+            # Player 1 controls (W / S)
+            if "w" in keys and keys["w"]: p1["y"] -= 5
+            if "s" in keys and keys["s"]: p1["y"] += 5
+            
+            # Player 2 controls (ArrowUp / ArrowDown)
+            if "ArrowUp" in keys and keys["ArrowUp"]: p2["y"] -= 5
+            if "ArrowDown" in keys and keys["ArrowDown"]: p2["y"] += 5
+
+            # Keep paddles inside canvas bounds
+            p1["y"] = max(0, min(canvas.height - p1["h"], p1["y"]))
+            p2["y"] = max(0, min(canvas.height - p2["h"], p2["y"]))
+
+            # Move ball
+            ball["x"] += ball["dx"]
+            ball["y"] += ball["dy"]
+
+            # Bounce off top and bottom walls
+            if ball["y"] - ball["radius"] <= 0 or ball["y"] + ball["radius"] >= canvas.height:
+                ball["dy"] *= -1
+
+            # Paddle 1 collision check
+            if (ball["x"] - ball["radius"] <= p1["x"] + p1["w"] and
+                p1["y"] <= ball["y"] <= p1["y"] + p1["h"]):
+                ball["dx"] *= -1
+                ball["x"] = p1["x"] + p1["w"] + ball["radius"]
+
+            # Paddle 2 collision check
+            if (ball["x"] + ball["radius"] >= p2["x"] and
+                p2["y"] <= ball["y"] <= p2["y"] + p2["h"]):
+                ball["dx"] *= -1
+                ball["x"] = p2["x"] - ball["radius"]
+
+            # Scoring mechanics
+            nonlocal scores
+            if ball["x"] < 0:
+                scores[1] += 1
+                reset_ball()
+            elif ball["x"] > canvas.width:
+                scores[0] += 1
+                reset_ball()
+
+        def reset_ball():
+            ball["x"] = canvas.width / 2
+            ball["y"] = canvas.height / 2
+            ball["dx"] *= -1
+
+        def draw():
+            # Clear frame
+            ctx.fillStyle = "#000"
+            ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+            # Draw center dividing net
+            ctx.strokeStyle = "#333"
+            ctx.setLineDash([5, 5])
+            ctx.beginPath()
+            ctx.moveTo(canvas.width / 2, 0)
+            ctx.lineTo(canvas.width / 2, canvas.height)
+            ctx.stroke()
+            ctx.setLineDash([])
+
+            # Draw paddles and ball
+            ctx.fillStyle = "#ffffff"
+            ctx.fillRect(p1["x"], p1["y"], p1["w"], p1["h"])
+            ctx.fillRect(p2["x"], p2["y"], p2["w"], p2["h"])
+
+            ctx.beginPath()
+            ctx.arc(ball["x"], ball["y"], ball["radius"], 0, 6.28)
+            ctx.fill()
+
+            # Render score display
+            ctx.font = "32px monospace"
+            ctx.fillStyle = "#4ec9b0"
+            ctx.fillText(str(scores[0]), canvas.width / 2 - 60, 45)
+            ctx.fillText(str(scores[1]), canvas.width / 2 + 35, 45)
+
+        # Smooth recursive game loop runner
+        def game_loop(timestamp):
+            update()
+            draw()
+            window.requestAnimationFrame(create_proxy(game_loop))
+
+        # Initialize the loop animation
+        window.requestAnimationFrame(create_proxy(game_loop))
+    </script>
+
+</body>
+</html>
