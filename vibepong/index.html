@@ -82,8 +82,7 @@
                 ball["dx"] *= -1
                 ball["x"] = p2["x"] - ball["radius"]
 
-            # Scoring mechanics
-            nonlocal scores
+            # Scoring mechanics (Mutating list elements doesn't require nonlocal)
             if ball["x"] < 0:
                 scores[1] += 1
                 reset_ball()
