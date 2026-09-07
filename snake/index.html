@@ -19,6 +19,7 @@
       from random import randint
       from js import document, window
       from pyodide.ffi import create_proxy
+      from pyscript import when
       canvasE=document.createElement("canvas")
       canvasE.width=600
       canvasE.height=600
@@ -38,6 +39,30 @@
           canvas.fillRect(seg[0]*tilesize,seg[1]*tilesize,tilesize,tilesize)
         canvas.fillStyle="#ff0000"
         canvas.fillRect(fruit[0]*tilesize,fruit[1]*tilesize,tilesize,tilesize)
+      def newbtn(id,pos,clr,size,text):
+        btn=document.createElement("button")
+        btn.id=id
+        btn.textContent=text
+        btn.style.top=pos[0]
+        btn.style.left=pos[1]
+        btn.style.width=size[0]
+        btn.style.height=size[1]
+        btn.style.backgroundColor=clr
+        document.getElementById("game-container").appendChild(btn)
+        return btn
+      @when("click",newbtn("btnUp",(0,0),"#ffffff",(50,50),"UP"))
+      def btnUpHandle(event):
+        DIR=(0,-1)
+      @when("click",newbtn("btnDown",(50,0),"#ffffff",(50,50),"DOWN"))
+      def btnDownHandle(event):
+        DIR=(0,1)
+      @when("click",newbtn("btnLeft",(100,0),"#ffffff",(50,50),"LEFT"))
+      def btnLeftHandle(event):
+        DIR=(-1,0)
+      @when("click",newbtn("btnRight",(150,0),"#ffffff",(50,50),"RIGHT"))
+      def btnRightHandle(event):
+        DIR=(1,0)
+      
       def logic():
         ate=False
         snake.append(snake[-1][0]+DIR[0],snake[-1][1]+DIR[1])
