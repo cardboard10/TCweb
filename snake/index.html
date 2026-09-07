@@ -28,6 +28,13 @@
       canvasE.style.background="#777777"
       document.getElementById("game-container").appendChild(canvasE)
       canvas=canvasE.getContext("2d")
+      #the following container config was written by gemini
+      container = document.getElementById("game-container")
+      container.style.position = "relative"
+      container.style.width = "600px"
+      container.style.margin = "0 auto"
+      container.appendChild(canvasE)
+      #end of gemini's writting
       snake=[(0,0)]
       fruit=(5,0)
       DIR=(0,0)
