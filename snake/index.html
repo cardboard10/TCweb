@@ -77,7 +77,7 @@
       def gameloop(timestamp):
         curtime=time()
         sincelasttick=curtime-globals()["lasttick"]
-        display(f"DIR={DIR}; snake={snake}; fruit={fruit}; timesincelasttick={timesincelasttick}")
+        display(f"DIR={DIR}; snake={snake}; fruit={fruit}; timesincelasttick={sincelasttick}")
         logic()
         draw()
         window.requestAnimationFrame(create_proxy(gameloop))
