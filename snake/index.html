@@ -73,12 +73,14 @@
           globals()["fruit"]=(randint(0,canvasE.width//tilesize),randint(0,canvasE.height//tilesize))
         else:
           snake.pop(0)
-      #globals()["lasttick"]=time()
+      globals()["lasttick"]=time()
       def gameloop(timestamp):
-        #curtime=time()
-        #sincelasttick=curtime-globals()["lasttick"]
+        curtime=time()
+        sincelasttick=curtime-globals()["lasttick"]
         #display(f"DIR={DIR}; snake={snake}; fruit={fruit}; timesincelasttick={sincelasttick}")
-        sleep(0.5)
+        if sincelasttick>0.15:
+          logic()
+          globals()["lasttick"]=curtime
         draw()
         window.requestAnimationFrame(create_proxy(gameloop))
       window.requestAnimationFrame(create_proxy(gameloop))
