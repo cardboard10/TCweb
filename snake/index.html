@@ -45,23 +45,23 @@
         btn.textContent=text
         btn.style.top=f"{pos[0]}px"
         btn.style.left=f"{pos[1]}px"
-        btn.style.width=size[0]
-        btn.style.height=size[1]
+        btn.style.width=f"{size[0]}px"
+        btn.style.height=f"{size[1]}px"
         btn.style.backgroundColor=clr
         document.getElementById("game-container").appendChild(btn)
         return btn
       @when("click",newbtn("btnUp",(0,0),"#ffffff",(50,50),"UP"))
       def btnUpHandle(event):
-        DIR=(0,-1)
+        globals()["DIR"]=(0,-1)
       @when("click",newbtn("btnDown",(50,0),"#ffffff",(50,50),"DOWN"))
       def btnDownHandle(event):
-        DIR=(0,1)
+        globals()["DIR"]=(0,1)
       @when("click",newbtn("btnLeft",(100,0),"#ffffff",(50,50),"LEFT"))
       def btnLeftHandle(event):
-        DIR=(-1,0)
+        globals()["DIR"]=(-1,0)
       @when("click",newbtn("btnRight",(150,0),"#ffffff",(50,50),"RIGHT"))
       def btnRightHandle(event):
-        DIR=(1,0)
+        globals()["DIR"]=(1,0)
       
       def logic():
         ate=False
