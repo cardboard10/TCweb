@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pynix Arcade: snake</title>
+    
+    <!-- PyScript Core Engine -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2026.7.3/core.css">
+    <script type="module" src="https://pyscript.net/releases/2026.7.3/core.js"></script>
+</head>
+<body style="background: #111; color: white; text-align: center; font-family: monospace; margin-top: 30px;">
+
+    
+    
+    <!-- Container where Python will inject the canvas -->
+    <div id="game-container"></div>
+    <script type="py">
+      from js import document, window
+      from pyodide.ffi import create_proxy
+      canvas=document.createElement("canvas")
+      canvas.width=600
+      canvas.height=600
+      canvas.style.border="2px solid #ffffff"
+      canvas.style.background="#777777"
+      document.getElementById("game-container").appendChild(canvas)
+      screen=canvas.getContext("2d")
+    </script>
+</body>
+</html>
