@@ -82,7 +82,8 @@
           logic()
           globals()["lasttick"]=curtime
         draw()
-        window.requestAnimationFrame(create_proxy(gameloop))
+        if snake[-1][0]<0 or snake[-1][0]>canvasE.width//tilesize or snake[-1][1]<0 or snake[-1][1]>canvasE.height//tilesize:pass
+        else:window.requestAnimationFrame(create_proxy(gameloop))
       window.requestAnimationFrame(create_proxy(gameloop))
     </script>
 </body>
