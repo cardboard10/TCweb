@@ -18,13 +18,13 @@
     <script type="py">
       from js import document, window
       from pyodide.ffi import create_proxy
-      canvas=document.createElement("canvas")
-      canvas.width=600
-      canvas.height=600
-      canvas.style.border="2px solid #ffffff"
-      canvas.style.background="#777777"
-      document.getElementById("game-container").appendChild(canvas)
-      screen=canvas.getContext("2d")
+      canvasE=document.createElement("canvas")
+      canvasE.width=600
+      canvasE.height=600
+      canvasE.style.border="2px solid #ffffff"
+      canvasE.style.background="#777777"
+      document.getElementById("game-container").appendChild(canvasE)
+      canvas=canvasE.getContext("2d")
       snake=[(0,0)]
       fruit=[(5,5)]
       def draw():
