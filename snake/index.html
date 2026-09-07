@@ -77,9 +77,8 @@
       def gameloop(timestamp):
         curtime=time()
         sincelasttick=curtime-globals()["lasttick"]
-        display(f"DIR={DIR}; snake={snake}; fruit={fruit}; timesincelasttick={sincelasttick}")
-        if sincelasttick>=0.5:logic()
-        else:sleep(0.5)
+        #display(f"DIR={DIR}; snake={snake}; fruit={fruit}; timesincelasttick={sincelasttick}")
+        sleep(0.5)
         draw()
         window.requestAnimationFrame(create_proxy(gameloop))
       window.requestAnimationFrame(create_proxy(gameloop))
