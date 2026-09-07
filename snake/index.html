@@ -25,6 +25,17 @@
       canvas.style.background="#777777"
       document.getElementById("game-container").appendChild(canvas)
       screen=canvas.getContext("2d")
+      snake=[(0,0)]
+      fruit=[(5,5)]
+      def draw():
+        canvas.fillStyle="#777777"
+        canvas.fillRect(0,0,canvas.width,canvas.height)
+        canvas.fillStyle="#0000ff"
+        for seg in snake:
+          canvas.fillRect(seg[0]*50,seg[1]*50,(seg[0]+1)*50,(seg[1]+1)*50)
+        for pos in fruit:
+          canvas.fillRect(pos[0]*50,pos[1]*50,(pos[0]+1)*50,(pos[1]+1)*50)
+      draw()
     </script>
 </body>
 </html>
