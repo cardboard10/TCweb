@@ -27,15 +27,16 @@
       canvas=canvasE.getContext("2d")
       snake=[(10,5)]
       fruit=[(30,35)]
+      tilesize=50
       def draw():
         canvas.fillStyle="#777777"
         canvas.fillRect(0,0,canvasE.width,canvasE.height)
         canvas.fillStyle="#0000ff"
         for seg in snake:
-          canvas.fillRect((seg[0]*10)-(10-1),(seg[1]*10)-(10-1),seg[0]*10,seg[1]*10)
+          canvas.fillRect((seg[0]*tilesize,seg[1]*tilesize,tilesize,tilesize)
         canvas.fillStyle="#ff0000"
         for pos in fruit:
-          canvas.fillRect((pos[0]*10)-(10-1),(pos[1]*10)-(10-1),pos[0]*10,pos[1]*10)
+          canvas.fillRect((pos[0]*tilesize,pos[1]*tilesize,tilesize,tilesize)
       draw()
     </script>
 </body>
