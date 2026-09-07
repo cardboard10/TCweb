@@ -16,7 +16,7 @@
     <!-- Container where Python will inject the canvas -->
     <div id="game-container"></div>
     <script type="py">
-      from time import time
+      from time import time,sleep
       from random import randint
       from js import document, window
       from pyodide.ffi import create_proxy
@@ -79,6 +79,7 @@
         sincelasttick=curtime-globals()["lasttick"]
         #display(f"DIR={DIR}; snake={snake}; fruit={fruit}; timesincelasttick={sincelasttick}")
         if sincelasttick>=0.5:logic()
+        else:sleep(0.5)
         draw()
         window.requestAnimationFrame(create_proxy(gameloop))
       window.requestAnimationFrame(create_proxy(gameloop))
