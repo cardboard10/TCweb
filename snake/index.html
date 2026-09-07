@@ -19,7 +19,7 @@
       from random import randint
       from js import document, window
       from pyodide.ffi import create_proxy
-      from pyscript import when
+      from pyscript import when, display
       canvasE=document.createElement("canvas")
       canvasE.width=600
       canvasE.height=600
@@ -73,6 +73,7 @@
         else:
           snake.pop(0)
       def gameloop(timestamp):
+        display(f"{DIR}")
         logic()
         draw()
         window.requestAnimationFrame(create_proxy(gameloop))
