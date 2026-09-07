@@ -32,9 +32,9 @@
         canvas.fillRect(0,0,canvasE.width,canvasE.height)
         canvas.fillStyle="#0000ff"
         for seg in snake:
-          canvas.fillRect(seg[0]*50,seg[1]*50,(seg[0]+1)*50,(seg[1]+1)*50)
+          canvas.fillRect(seg[0]*50,seg[1]*50,(seg[0]*50)-(50-1),(seg[1]*50)-(50-1))
         for pos in fruit:
-          canvas.fillRect(pos[0]*50,pos[1]*50,(pos[0]+1)*50,(pos[1]+1)*50)
+          canvas.fillRect(pos[0]*50,pos[1]*50,(pos[0]*50)-(50-1),(pos[1]*50)-(50-1))
       draw()
     </script>
 </body>
