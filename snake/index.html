@@ -16,6 +16,7 @@
     <!-- Container where Python will inject the canvas -->
     <div id="game-container"></div>
     <script type="py">
+      from random import randint
       from js import document, window
       from pyodide.ffi import create_proxy
       canvasE=document.createElement("canvas")
@@ -26,7 +27,8 @@
       document.getElementById("game-container").appendChild(canvasE)
       canvas=canvasE.getContext("2d")
       snake=[(0,0)]
-      fruit=[(5,5)]
+      fruit=(5,0)
+      DIR=(0,0)
       tilesize=50
       def draw():
         canvas.fillStyle="#777777"
@@ -35,9 +37,15 @@
         for seg in snake:
           canvas.fillRect(seg[0]*tilesize,seg[1]*tilesize,tilesize,tilesize)
         canvas.fillStyle="#ff0000"
-        for pos in fruit:
-          canvas.fillRect(pos[0]*tilesize,pos[1]*tilesize,tilesize,tilesize)
-      draw()
+        canvas.fillRect(fruit[0]*tilesize,fruit[1]*tilesize,tilesize,tilesize)
+      def logic():
+        ate=False
+        snake.append(snake[-1][0]+DIR[0],snake[-1][1]+DIR[1])
+        if fruit in snake:
+          ate=True
+          fruit=(randint(0,canvasE.width//tilesize),randint(0,canvasE.height//tilesize))
+        else:
+          snake.pop(0)
     </script>
 </body>
 </html>
