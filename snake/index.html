@@ -51,16 +51,16 @@
         btn.style.backgroundColor=clr
         document.getElementById("game-container").appendChild(btn)
         return btn
-      @when("click",newbtn("btnUp",(0,0),"#ffffff",(50,50),"UP"))
+      @when("click",newbtn("btnUp",(620,100),"#ffffff",(50,50),"UP"))
       def btnUpHandle(event):
         globals()["DIR"]=(0,-1)
-      @when("click",newbtn("btnDown",(50,0),"#ffffff",(50,50),"DOWN"))
+      @when("click",newbtn("btnDown",(680,100),"#ffffff",(50,50),"DOWN"))
       def btnDownHandle(event):
         globals()["DIR"]=(0,1)
-      @when("click",newbtn("btnLeft",(100,0),"#ffffff",(50,50),"LEFT"))
+      @when("click",newbtn("btnLeft",(650,40),"#ffffff",(50,50),"LEFT"))
       def btnLeftHandle(event):
         globals()["DIR"]=(-1,0)
-      @when("click",newbtn("btnRight",(150,0),"#ffffff",(50,50),"RIGHT"))
+      @when("click",newbtn("btnRight",(650,160),"#ffffff",(50,50),"RIGHT"))
       def btnRightHandle(event):
         globals()["DIR"]=(1,0)
         canvasE.style.background="#00ff00"
