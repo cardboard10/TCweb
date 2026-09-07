@@ -16,6 +16,7 @@
     <!-- Container where Python will inject the canvas -->
     <div id="game-container"></div>
     <script type="py">
+      from time import time
       from random import randint
       from js import document, window
       from pyodide.ffi import create_proxy
@@ -72,8 +73,11 @@
           globals()["fruit"]=(randint(0,canvasE.width//tilesize),randint(0,canvasE.height//tilesize))
         else:
           snake.pop(0)
+      globals()["lasttick"]=time()
       def gameloop(timestamp):
-        display(f"DIR={DIR}; snake={snake}; fruit={fruit};")
+        curtime=time()
+        sincelasttick=curtime-globals()["lasttick"]
+        display(f"DIR={DIR}; snake={snake}; fruit={fruit}; timesincelasttick={timesincelasttick}")
         logic()
         draw()
         window.requestAnimationFrame(create_proxy(gameloop))
