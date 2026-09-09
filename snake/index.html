@@ -58,12 +58,12 @@
         btn.style.backgroundColor=clr
         document.getElementById("game-container").appendChild(btn)
         return btn
-      @when("keydown", "#user-input")
       def handle_key(event):
         if event.key=="w":btnUpHandle(event)
         elif event.key=="a":btnLeftHandle(event)
         elif event.key=="s":btnDownHandle(event)
         elif event.key=="d":btnRightHandle(event)
+      window.addEventListener("keydown", create_proxy(handle_key))
       @when("click",newbtn("btnUp",(620,100),"#ffffff",(50,50),"UP"))
       def btnUpHandle(event):
         globals()["DIR"]=(0,-1)
