@@ -66,16 +66,20 @@
       window.addEventListener("keydown", create_proxy(handle_key))
       @when("click",newbtn("btnUp",(620,100),"#ffffff",(50,50),"UP"))
       def btnUpHandle(event):
-        globals()["DIR"]=(0,-1)
+        if globals()["DIR"]!=(0,1):
+          globals()["DIR"]=(0,-1)
       @when("click",newbtn("btnDown",(680,100),"#ffffff",(50,50),"DOWN"))
       def btnDownHandle(event):
-        globals()["DIR"]=(0,1)
+        if globals()["DIR"]!=(0,-1):
+          globals()["DIR"]=(0,1)
       @when("click",newbtn("btnLeft",(650,40),"#ffffff",(50,50),"LEFT"))
       def btnLeftHandle(event):
-        globals()["DIR"]=(-1,0)
+        if globals()["DIR"]!=(1,0):
+          globals()["DIR"]=(-1,0)
       @when("click",newbtn("btnRight",(650,160),"#ffffff",(50,50),"RIGHT"))
       def btnRightHandle(event):
-        globals()["DIR"]=(1,0)
+        if globals()["DIR"]!=(-1,0):
+          globals()["DIR"]=(1,0)
         canvasE.style.background="#00ff00"
       
       def logic():
