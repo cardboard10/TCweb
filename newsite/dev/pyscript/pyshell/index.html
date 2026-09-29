@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Terminal REPL</title>
+    
+    <!-- PyScript Core Engine -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2026.7.3/core.css">
+    <script type="module" src="https://pyscript.net/releases/2026.7.3/core.js"></script>
+</head>
+<body>
+
+    <div id="terminal-app"></div>
+
+    <script type="py">
+        import io
+        import sys
+        from js import document
+
+        app = document.getElementById("terminal-app")
+        app.style.maxWidth = "700px"
+        app.style.margin = "40px auto"
+        app.style.fontFamily = "monospace"
+        app.style.boxShadow = "0 4px 10px rgba(0,0,0,0.2)"
+        app.style.borderRadius = "6px"
+        app.style.overflow = "hidden"
+
+        output_div = document.createElement("div")
+        output_div.style.background = "#1e1e1e"
+        output_div.style.color = "#d4d4d4"
+        output_div.style.padding = "15px"
+        output_div.style.height = "350px"
+        output_div.style.overflowY = "auto"
+        output_div.style.whiteSpace = "pre-wrap"
+        output_div.innerText = "Python Web Terminal (Auto-evaluates expressions & prints outputs)\n--------------------------------------------------------------------\n"
+        app.appendChild(output_div)
+
+        input_bar = document.createElement("div")
+        input_bar.style.display = "flex"
+        input_bar.style.background = "#2d2d2d"
+        input_bar.style.padding = "10px 15px"
+        app.appendChild(input_bar)
+
+        prompt = document.createElement("span")
+        prompt.innerText = ">>> "
+        prompt.style.color = "#4ec9b0"
+        prompt.style.fontWeight = "bold"
+        prompt.style.alignSelf = "center"
+        input_bar.appendChild(prompt)
+
+        input_field = document.createElement("input")
+        input_field.type = "text"
+        input_field.style.flex = "1"
+        input_field.style.background = "transparent"
+        input_field.style.border = "none"
+        input_field.style.color = "#ffffff"
+        input_field.style.fontFamily = "monospace"
+        input_field.style.fontSize = "14px"
+        input_field.style.outline = "none"
+        input_bar.appendChild(input_field)
+
+        repl_globals = {"__builtins__": __builtins__}
+
+        def handle_key(event):
+            if event.key == "Enter":
+                code = input_field.value
+                if not code.strip():
+                    return
+                
+                output_div.innerText += f">>> {code}\n"
+                input_field.value = ""
+
+                buffer = io.StringIO()
+                sys.stdout = buffer
+                
+                try:
+                    # Try evaluating as an expression first (e.g. typing '2 + 2' or a variable name)
+                    compiled = compile(code, '<string>', 'eval')
+                    eval_result = eval(compiled, repl_globals)
+                    if eval_result is not None:
+                        output_div.innerText += str(eval_result) + "\n"
+                except SyntaxError:
+                    # If it's a statement/block (e.g. loops, assignments, print()), execute it normally
+                    try:
+                        exec(code, repl_globals)
+                    except Exception as e:
+                        output_div.innerText += f"Error: {e}\n"
+                except Exception as e:
+                    output_div.innerText += f"Error: {e}\n"
+                
+                # Grab any printed text from standard output (like print() or help())
+                printed_output = buffer.getvalue()
+                if printed_output:
+                    output_div.innerText += printed_output
+
+                sys.stdout = sys.__stdout__
+                output_div.scrollTop = output_div.scrollHeight
+
+        input_field.onkeydown = handle_key
+        input_field.focus()
+        output_div.innerText += "Ready!\n"
+    </script>
+
+</body>
+</html>

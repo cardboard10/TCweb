@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Web Interpreter</title>
+    
+    <link rel="stylesheet" href="https://pyscript.net/releases/2026.7.3/core.css">
+    <script type="module" src="https://pyscript.net/releases/2026.7.3/core.js"></script>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        textarea {
+            width: 100%;
+            height: 120px;
+            font-family: monospace;
+            font-size: 14px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #output {
+            margin-top: 20px;
+            background: #272822;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            min-height: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Python Browser Interpreter</h2>
+    <p>Type your Python code below and click Run to test it live using PyScript.</p>
+
+    <textarea id="code-input">print("Hello from PyScript!")
+x = 5 + 5
+print(f"5 + 5 = {x}")</textarea>
+    
+    <br>
+    
+    <button py-click="run_code">Run Code</button>
+
+    <pre id="output">Loading Python environment...</pre>
+
+    <script type="py">
+        import io
+        import sys
+        from js import document
+
+        # Update loading message once python is ready
+        document.getElementById("output").innerText = "Python is ready! Click 'Run Code'."
+
+        def run_code(event):
+            # Grab code string from the textarea
+            user_code = document.getElementById("code-input").value
+            
+            # Capture standard output (print statements and help output)
+            buffer = io.StringIO()
+            sys.stdout = buffer
+            
+            try:
+                # Execute the user code
+                exec(user_code)
+                output = buffer.getvalue()
+                if not output:
+                    output = "Code executed successfully (no output)."
+            except Exception as e:
+                output = f"Error: {e}"
+            finally:
+                # Restore original standard output
+                sys.stdout = sys.__stdout__
+            
+            # Display results in the <pre> tag
+            document.getElementById("output").innerText = output
+    </script>
+
+</body>
+</html>
