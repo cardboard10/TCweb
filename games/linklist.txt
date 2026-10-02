@@ -1,4 +1,0 @@
-home:../
-snake:./pygame/snake
-gladiator(GPT):./pygame/GPTgladiator
-pong(GEMINI):./pyscript/pong

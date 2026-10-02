@@ -1,4 +1,0 @@
-home:../
-pyscript the tool(python for the web):pyscript.net
-pyscript the IDE(a helpfull site for developing and sharing pyscript sites/projects):pyscript.com
-GitHub (the free version control, and file hosting site. also has a CLI for the terminal and has GitHub pages to let you host websites like this one):GitHub.com

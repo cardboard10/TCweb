@@ -1,2 +1,0 @@
-color-loop : ./pygame/COLORS/
-simple-text-editor : ./pygame/EDIT/

@@ -1,7 +1,0 @@
-home:/
-games:/games/
-experimental pages:/exp/
-techy pages:/dev/
-helpful links:/links/
-my pyscript account:"https://pyscript.com/@tcmods"
-about me:/aboutME/
